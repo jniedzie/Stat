@@ -1,0 +1,192 @@
+import ROOT
+import collections
+import os, commands
+
+from TT import *
+from ZJets import *
+from WJets import *
+from QCD import *
+from Data import *
+from SVJ_mZprime1000_mDark20_rinv03_alpha02 import *
+from SVJ_mZprime2000_mDark20_rinv03_alpha02 import *
+from SVJ_mZprime3000_mDark20_rinv03_alpha02 import *
+from SVJ_mZprime4000_mDark20_rinv03_alpha02 import *
+from SVJ_mZprime3000_mDark1_rinv03_alpha02 import *
+from SVJ_mZprime3000_mDark50_rinv03_alpha02 import *
+from SVJ_mZprime3000_mDark100_rinv03_alpha02 import *
+from SVJ_mZprime3000_mDark20_rinv01_alpha02 import *
+from SVJ_mZprime3000_mDark20_rinv05_alpha02 import *
+from SVJ_mZprime3000_mDark20_rinv07_alpha02 import *
+from SVJ_mZprime3000_mDark20_rinv03_alpha01 import *
+from SVJ_mZprime3000_mDark20_rinv03_alpha05 import *
+from SVJ_mZprime3000_mDark20_rinv03_alpha1 import *
+
+
+from SVJ_mZprime3000_mDark1_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark5_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark10_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark30_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark40_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark50_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark60_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark70_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark80_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark90_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark100_rinv03_alphapeak import *
+
+from SVJ_mZprime3000_mDark20_rinv0_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv01_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv02_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv04_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv05_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv06_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv07_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv08_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv09_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv1_alphapeak import *
+
+from SVJ_mZprime3000_mDark20_rinv03_alphalow import *
+from SVJ_mZprime3000_mDark20_rinv03_alpha02 import *
+from SVJ_mZprime3000_mDark20_rinv03_alphahigh import *
+
+from SVJ_mZprime500_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime600_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime700_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime800_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime900_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1000_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1100_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1200_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1300_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1400_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1500_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1600_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1700_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1800_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime1900_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2000_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2100_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2200_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2300_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2400_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2500_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2600_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2700_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2800_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime2900_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3000_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3100_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3200_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3300_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3400_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3500_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3600_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3700_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3800_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime3900_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime4000_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime4100_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime4200_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime4300_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime4400_mDark20_rinv03_alphapeak import *
+from SVJ_mZprime4500_mDark20_rinv03_alphapeak import *
+
+samples = collections.OrderedDict()
+'''
+samples["SVJ_mZprime3000_mDark1_rinv03_alphapeak"] = SVJ_mZprime3000_mDark1_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark5_rinv03_alphapeak"] = SVJ_mZprime3000_mDark5_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark10_rinv03_alphapeak"] = SVJ_mZprime3000_mDark10_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark30_rinv03_alphapeak"] = SVJ_mZprime3000_mDark30_rinv03_alphapeak  
+samples["SVJ_mZprime3000_mDark40_rinv03_alphapeak"] = SVJ_mZprime3000_mDark40_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark50_rinv03_alphapeak"] = SVJ_mZprime3000_mDark50_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark60_rinv03_alphapeak"] = SVJ_mZprime3000_mDark60_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark70_rinv03_alphapeak"] = SVJ_mZprime3000_mDark70_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark80_rinv03_alphapeak"] = SVJ_mZprime3000_mDark80_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark90_rinv03_alphapeak"] = SVJ_mZprime3000_mDark90_rinv03_alphapeak
+#samples["SVJ_mZprime3000_mDark100_rinv03_alphapeak"] = SVJ_mZprime3000_mDark100_rinv03_alphapeak
+
+samples["SVJ_mZprime3000_mDark20_rinv0_alphapeak"] = SVJ_mZprime3000_mDark20_rinv0_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv01_alphapeak"] = SVJ_mZprime3000_mDark20_rinv01_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv02_alphapeak"] = SVJ_mZprime3000_mDark20_rinv02_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv03_alphapeak"] = SVJ_mZprime3000_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv04_alphapeak"] = SVJ_mZprime3000_mDark20_rinv04_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv05_alphapeak"] = SVJ_mZprime3000_mDark20_rinv05_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv06_alphapeak"] = SVJ_mZprime3000_mDark20_rinv06_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv07_alphapeak"] = SVJ_mZprime3000_mDark20_rinv07_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv08_alphapeak"] = SVJ_mZprime3000_mDark20_rinv08_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv09_alphapeak"] = SVJ_mZprime3000_mDark20_rinv09_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv1_alphapeak"] = SVJ_mZprime3000_mDark20_rinv1_alphapeak
+
+samples["SVJ_mZprime3000_mDark20_rinv03_alphalow"] = SVJ_mZprime3000_mDark20_rinv03_alphalow
+samples["SVJ_mZprime3000_mDark20_rinv03_alpha02"] = SVJ_mZprime3000_mDark20_rinv03_alpha02
+samples["SVJ_mZprime3000_mDark20_rinv03_alphahigh"] = SVJ_mZprime3000_mDark20_rinv03_alphahigh
+'''
+samples["SVJ_mZprime500_mDark20_rinv03_alphapeak"] = SVJ_mZprime500_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime600_mDark20_rinv03_alphapeak"] = SVJ_mZprime600_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime700_mDark20_rinv03_alphapeak"] = SVJ_mZprime700_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime800_mDark20_rinv03_alphapeak"] = SVJ_mZprime800_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime900_mDark20_rinv03_alphapeak"] = SVJ_mZprime900_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1000_mDark20_rinv03_alphapeak"] = SVJ_mZprime1000_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1100_mDark20_rinv03_alphapeak"] = SVJ_mZprime1100_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1200_mDark20_rinv03_alphapeak"] = SVJ_mZprime1200_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1300_mDark20_rinv03_alphapeak"] = SVJ_mZprime1300_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1400_mDark20_rinv03_alphapeak"] = SVJ_mZprime1400_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1500_mDark20_rinv03_alphapeak"] = SVJ_mZprime1500_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1600_mDark20_rinv03_alphapeak"] = SVJ_mZprime1600_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1700_mDark20_rinv03_alphapeak"] = SVJ_mZprime1700_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1800_mDark20_rinv03_alphapeak"] = SVJ_mZprime1800_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime1900_mDark20_rinv03_alphapeak"] = SVJ_mZprime1900_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2000_mDark20_rinv03_alphapeak"] = SVJ_mZprime2000_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2100_mDark20_rinv03_alphapeak"] = SVJ_mZprime2100_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2200_mDark20_rinv03_alphapeak"] = SVJ_mZprime2200_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2300_mDark20_rinv03_alphapeak"] = SVJ_mZprime2300_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2400_mDark20_rinv03_alphapeak"] = SVJ_mZprime2400_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2500_mDark20_rinv03_alphapeak"] = SVJ_mZprime2500_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2600_mDark20_rinv03_alphapeak"] = SVJ_mZprime2600_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2700_mDark20_rinv03_alphapeak"] = SVJ_mZprime2700_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2800_mDark20_rinv03_alphapeak"] = SVJ_mZprime2800_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime2900_mDark20_rinv03_alphapeak"] = SVJ_mZprime2900_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3000_mDark20_rinv03_alphapeak"] = SVJ_mZprime3000_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3100_mDark20_rinv03_alphapeak"] = SVJ_mZprime3100_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3100_mDark20_rinv03_alphapeak"] = SVJ_mZprime3100_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3200_mDark20_rinv03_alphapeak"] = SVJ_mZprime3200_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3300_mDark20_rinv03_alphapeak"] = SVJ_mZprime3300_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3400_mDark20_rinv03_alphapeak"] = SVJ_mZprime3400_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3500_mDark20_rinv03_alphapeak"] = SVJ_mZprime3500_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3600_mDark20_rinv03_alphapeak"] = SVJ_mZprime3600_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3700_mDark20_rinv03_alphapeak"] = SVJ_mZprime3700_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3800_mDark20_rinv03_alphapeak"] = SVJ_mZprime3800_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime3900_mDark20_rinv03_alphapeak"] = SVJ_mZprime3900_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime4000_mDark20_rinv03_alphapeak"] = SVJ_mZprime4000_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime4100_mDark20_rinv03_alphapeak"] = SVJ_mZprime4100_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime4200_mDark20_rinv03_alphapeak"] = SVJ_mZprime4200_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime4300_mDark20_rinv03_alphapeak"] = SVJ_mZprime4300_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime4400_mDark20_rinv03_alphapeak"] = SVJ_mZprime4400_mDark20_rinv03_alphapeak
+samples["SVJ_mZprime4500_mDark20_rinv03_alphapeak"] = SVJ_mZprime4500_mDark20_rinv03_alphapeak
+
+'''
+samples["SVJ_mZprime1000_mDark20_rinv03_alpha02"] = SVJ_mZprime1000_mDark20_rinv03_alpha02
+samples["SVJ_mZprime2000_mDark20_rinv03_alpha02"] = SVJ_mZprime2000_mDark20_rinv03_alpha02
+samples["SVJ_mZprime3000_mDark20_rinv03_alpha02"] = SVJ_mZprime3000_mDark20_rinv03_alpha02
+samples["SVJ_mZprime4000_mDark20_rinv03_alpha02"] = SVJ_mZprime4000_mDark20_rinv03_alpha02
+
+samples["SVJ_mZprime3000_mDark1_rinv03_alpha02"] = SVJ_mZprime3000_mDark1_rinv03_alpha02
+samples["SVJ_mZprime3000_mDark50_rinv03_alpha02"] = SVJ_mZprime3000_mDark50_rinv03_alpha02
+samples["SVJ_mZprime3000_mDark100_rinv03_alpha02"] = SVJ_mZprime3000_mDark100_rinv03_alpha02
+
+samples["SVJ_mZprime3000_mDark20_rinv01_alpha02"] = SVJ_mZprime3000_mDark20_rinv01_alpha02
+samples["SVJ_mZprime3000_mDark20_rinv05_alpha02"] = SVJ_mZprime3000_mDark20_rinv05_alpha02
+samples["SVJ_mZprime3000_mDark20_rinv07_alpha02"] = SVJ_mZprime3000_mDark20_rinv07_alpha02
+
+samples["SVJ_mZprime3000_mDark20_rinv03_alpha01"] = SVJ_mZprime3000_mDark20_rinv03_alpha01
+samples["SVJ_mZprime3000_mDark20_rinv03_alpha05"] = SVJ_mZprime3000_mDark20_rinv03_alpha05
+samples["SVJ_mZprime3000_mDark20_rinv03_alpha1"] = SVJ_mZprime3000_mDark20_rinv03_alpha1
+'''
+
+samples["WJets"] = WJets
+samples["ZJets"] = ZJets
+samples["TT"]=TT
+samples["QCD"] = QCD
+samples["Data"] = Data
+

@@ -1,0 +1,18 @@
+imax 1 number of channels 
+jmax * number of backgrounds 
+kmax * number of nuisance parameters
+-----------------------------------------------------------------------------------
+shapes   *      *   /afs/cern.ch/work/j/jniedzie/private/svjets/Stat/histosAE.root    $CHANNEL/$PROCESS    $CHANNEL/$PROCESS_$SYSTEMATIC
+shapes   data_obs      *   /afs/cern.ch/work/j/jniedzie/private/svjets/Stat/histosAE.root    $CHANNEL/$PROCESS
+-----------------------------------------------------------------------------------
+bin               SVJ0_2018
+observation       7010.000000
+-----------------------------------------------------------------------------------
+bin                                     SVJ0_2018                                  SVJ0_2018                                  
+process                                 SVJ_mZprime2000_mDark20_rinv03_alphapeak   QCD                                        
+process                                 0                                          1                                          
+rate                                    1.000000                                   7010.0                                     
+-----------------------------------------------------------------------------------
+lumi                lnN                 1.1                 1.1                 
+trigger             lnN                 1.02                1.02                
+BkgRate             lnU                 -                   4.0                 

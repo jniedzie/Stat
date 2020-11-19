@@ -36,7 +36,7 @@ def readFile(filename, cat):
     
     ifile = open(filename)
 
-    print "Reading ", filename
+    print("Reading ", filename)
     for l in ifile.readlines():
 
 
@@ -112,18 +112,18 @@ for point in sigpoints:
 
 
 
-print "Mass points: ", xvalues_
-print "Min: ", min(xvalues_)
-print "Max: ", max(xvalues_)
-print "l.v ", l.v
+print("Mass points: ", xvalues_)
+print("Min: ", min(xvalues_))
+print("Max: ", max(xvalues_))
+print("l.v ", l.v)
 
 #print "l.u1 ", l.u1
 
-print "Reading file: ", ("data/limit_%s.txt" % (opt.method))
-ebar_u1 = [l.u1[i] - l.v[i] for i in xrange(len(l.v))]
-ebar_u2 = [l.u2[i] - l.v[i] for i in xrange(len(l.v))]
-ebar_d1 = [l.v[i] - l.d1[i] for i in xrange(len(l.v))]
-ebar_d2 = [l.v[i] - l.d2[i] for i in xrange(len(l.v))]
+print("Reading file: ", ("data/limit_%s.txt" % (opt.method)))
+ebar_u1 = [l.u1[i] - l.v[i] for i in range(len(l.v))]
+ebar_u2 = [l.u2[i] - l.v[i] for i in range(len(l.v))]
+ebar_d1 = [l.v[i] - l.d1[i] for i in range(len(l.v))]
+ebar_d2 = [l.v[i] - l.d2[i] for i in range(len(l.v))]
 
 #print "u2 ", l.u2
 #print "u1 ", l.u1
@@ -141,9 +141,9 @@ obs_values = array('f', l.o)
 
 xvalues = array('f', xvalues_)
 
-print "XVALUES: ", xvalues
+print("XVALUES: ", xvalues)
 
-print "MEDVALUES: ", med_values
+print("MEDVALUES: ", med_values)
 
 y_theo = {str(mass):samples["SVJ_mZprime%d_mDark20_rinv03_alphapeak" % (mass)].sigma for mass in xvalues_ }
 
@@ -154,11 +154,11 @@ y_th_xsec = collections.OrderedDict(sorted(y_theo.items()))
 #print y_th_xsec.values()
 #print l.v
 
-y_xsec_vals = array('f', [l.v[i]*y_th_xsec.values()[i] for i in xrange(len(l.v) ) ])
+y_xsec_vals = array('f', [l.v[i]*list(y_th_xsec.values())[i] for i in range(len(l.v) ) ])
 
-y_xsec_obs_vals = array('f', [l.o[i]*y_th_xsec.values()[i] for i in xrange(len(l.o) ) ])
+y_xsec_obs_vals = array('f', [l.o[i]*list(y_th_xsec.values())[i] for i in range(len(l.o) ) ])
 
-y_th_xsec_vals = array('f', [th for th in y_th_xsec.itervalues()])
+y_th_xsec_vals = array('f', [th for th in y_th_xsec.values()])
 
 y_bars_d1 =  array('f', ebar_d1)
 y_bars_d2 =  array('f', ebar_d2)
@@ -166,10 +166,10 @@ y_bars_u1 =  array('f', ebar_u1)
 y_bars_u2 =  array('f', ebar_u2)
 
 if theo:
-    y_bars_d1 =  array('f', [ebar_d1[i]*y_th_xsec.values()[i] for i in xrange(len(l.v) ) ])
-    y_bars_d2 =  array('f', [ebar_d2[i]*y_th_xsec.values()[i] for i in xrange(len(l.v) ) ])
-    y_bars_u1 =  array('f', [ebar_u1[i]*y_th_xsec.values()[i] for i in xrange(len(l.v) ) ])
-    y_bars_u2 =  array('f', [ebar_u2[i]*y_th_xsec.values()[i] for i in xrange(len(l.v) ) ])
+    y_bars_d1 =  array('f', [ebar_d1[i]*list(y_th_xsec.values())[i] for i in range(len(l.v) ) ])
+    y_bars_d2 =  array('f', [ebar_d2[i]*list(y_th_xsec.values())[i] for i in range(len(l.v) ) ])
+    y_bars_u1 =  array('f', [ebar_u1[i]*list(y_th_xsec.values())[i] for i in range(len(l.v) ) ])
+    y_bars_u2 =  array('f', [ebar_u2[i]*list(y_th_xsec.values())[i] for i in range(len(l.v) ) ])
 
 #print "Error bars d1: ", ebar_d1
 #print "Error bars xsec d1: ", y_bars_d1

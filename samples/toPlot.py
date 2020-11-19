@@ -1,6 +1,5 @@
 import ROOT
 import collections
-import os, commands
 
 from TT import *
 from ZJets import *

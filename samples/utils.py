@@ -1,7 +1,7 @@
 
 import ROOT
 import collections
-import os, commands
+import os, subprocess
 
 
 d = "/scratch/decosa/v9/"
@@ -15,7 +15,7 @@ class sample(object):
 
 def outlist(repodir,dirn):
     cmd = "ls " + repodir + dirn
-    status,ls_la = commands.getstatusoutput( cmd )
+    status,ls_la = subprocess.getstatusoutput( cmd )
     list = ls_la.split(os.linesep)
     files = [d + "/"+dirn+ "/"+ l for l in list]
     return files

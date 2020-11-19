@@ -45,5 +45,7 @@ m " + mZprime + " SVJ_mZprime" + mZprime + "_mDark" + mDark + "_rinv" + rinv + "
 
             
         os.chdir("..")
+    else:
+	print("Path doesn't exist")
 
 

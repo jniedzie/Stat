@@ -43,6 +43,7 @@ isData = False
 def getRate(ch, process, ifile):
        hName = ch + "/"+ process
        h = ifile.Get(hName)
+       print "hist name: ", hName
        return h.Integral(1,h.GetXaxis().GetNbins()-1)
 
 def getHist(ch, process, ifile):

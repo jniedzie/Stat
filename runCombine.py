@@ -24,7 +24,7 @@ parser.add_option('',"--runSingleCat",dest="runSingleCat",action='store_true', d
 #interaction = opt.interaction
 
 
-path_ = "/afs/cern.ch/work/j/jniedzie/private/svjets/Stat/"
+path_ = "/afs/cern.ch/work/j/jniedzie/private/svjets/StatJeremi/"
 path_ += opt.dir
 
 

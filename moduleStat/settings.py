@@ -157,15 +157,3 @@ sigpoints = [ vec50, vec51, vec52, vec53, vec54,
            vec90, vec91, vec92, vec93, vec94,
         	vec100, vec101, vec102, vec103, vec104,
            ]
-
-
-
-#sigpoints = [ vec11, vec12, vec13, vec14, vec15]
-#sigpoints = [ vec11, vec12]
-
-
-
-#sigpoints = [vec11]
-
-
-#sigpoints = [s for s in sigpoints if sigpoints.index(s) % 2 == 0 ]

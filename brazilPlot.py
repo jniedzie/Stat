@@ -350,4 +350,8 @@ l_preliminary.DrawLatex(0.13, 0.81,"");
 
 
 c1.Update()
+
+
 c1.SaveAs("plots/test_limitPlot_%s_%s.pdf" % (opt.year, cat))
+
+ROOT.gApplication.Run()

@@ -1,5 +1,5 @@
 #FROM SVJ.MAKEPLOT.SAMPLES.SAMPLE IMPORT *
-from utils import *
+from samples.utils import *
 
 TTJets_DiLept = sample()
 TTJets_DiLept.files = outlist (d,"TTJets_DiLept")

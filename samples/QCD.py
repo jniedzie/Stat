@@ -1,5 +1,5 @@
 #from SVJ.MakePlot.samples.sample import *
-from utils import *
+from samples.utils import *
 
 QCD_Pt_80to120 = sample()
 QCD_Pt_80to120.files = outlist (d,"QCD_Pt_80to120")

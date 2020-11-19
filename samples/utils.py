@@ -1,8 +1,5 @@
-
-import ROOT
-import collections
 import os, subprocess
-
+import ROOT
 
 d = "/scratch/decosa/v9/"
 

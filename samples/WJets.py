@@ -4,7 +4,7 @@
 #
 ######################################
 
-from utils import *
+from samples.utils import *
 
 WJetsToLNu_HT100to200 = sample()
 WJetsToLNu_HT100to200.files = outlist (d,"WJetsToLNu_HT-100to200")

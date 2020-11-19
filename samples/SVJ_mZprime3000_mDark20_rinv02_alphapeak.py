@@ -1,4 +1,4 @@
-from utils import *
+from samples.utils import *
 
 SVJ_mZprime3000_mDark20_rinv02_alphapeak = sample()
 SVJ_mZprime3000_mDark20_rinv02_alphapeak.files = outlist (d,"SVJ_mZprime3000_mDark-20_rinv-0.2_alphapeak")

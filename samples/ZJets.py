@@ -4,7 +4,7 @@
 #
 ######################################
 
-from utils import *
+from samples.utils import *
 
 ZJetsToNuNu_HT100to200 = sample()
 ZJetsToNuNu_HT100to200.files = outlist (d,"ZJetsToNuNu_HT-100to200")

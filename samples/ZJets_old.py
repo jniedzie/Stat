@@ -1,4 +1,4 @@
-from utils import *
+from samples.utils import *
 
 ZJetsToNuNu_Zpt100to200 = sample()
 ZJetsToNuNu_Zpt100to200.files = outlist (d,"ZJetsToNuNu_Zpt-100to200")

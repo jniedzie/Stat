@@ -1,6 +1,6 @@
-from samples.toPlot import samples
 from moduleStat.settings import *
 from moduleStat.limitsUtils import Limit
+from moduleStat.samplesUtils import get_SVJ_cross_section
 
 import ROOT
 import optparse
@@ -15,30 +15,6 @@ def set_root_options():
     ROOT.gStyle.SetOptStat(0)
     ROOT.gROOT.SetBatch()        # don't pop up canvases
     ROOT.TH1.AddDirectory(False)
-
-
-class Limits(object):
-    def __init__(self):
-        self.values = []
-        self.observed = []
-        self.points_up_1_sigma = []
-        self.points_up_2_sigma = []
-        self.points_down_1_sigma = []
-        self.points_down_2_sigma = []
-
-        self.label_to_agr_name = {
-            "y_vals_": "values",
-            "y_observed_": "observed",
-            "y_up_points1_": "points_up_1_sigma",
-            "y_up_points2_": "points_up_2_sigma",
-            "y_down_points1_": "points_down_1_sigma",
-            "y_down_points2_": "points_down_2_sigma",
-        }
-
-    def print(self):
-        print("\n\nLimits:")
-        print("Values: ", self.values)
-        print("Observed: ", self.observed)
 
 
 def read_file(file_name, cat):
@@ -110,10 +86,10 @@ ebar_d1 = [limits[i].value - limits[i].points_down_1_sigma for i in range(n_limi
 ebar_d2 = [limits[i].value - limits[i].points_down_2_sigma for i in range(n_limits)]
 
 
-med_values = array('f', [l.value for l in limits])
-obs_values = array('f', [l.observed for l in limits])
+expected_values = array('f', [l.value for l in limits])
+observed_values = array('f', [l.observed for l in limits])
 
-xvalues = array('f', [l.mass for l in limits])
+x_values = array('f', [l.mass for l in limits])
 
 if opt.variable == "mDark":
     pass
@@ -123,12 +99,10 @@ elif opt.variable == "alpha":
     pass
 
 
+print("XVALUES: ", x_values)
+print("MEDVALUES: ", expected_values)
 
-print("XVALUES: ", xvalues)
-
-print("MEDVALUES: ", med_values)
-
-y_theo = {str(mass):samples["SVJ_mZprime%d_mDark20_rinv03_alphapeak" % (mass)].sigma for mass in xvalues }
+y_theo = {str(mass): get_SVJ_cross_section(mass) for mass in x_values }
 
 
 y_th_xsec = collections.OrderedDict(sorted(y_theo.items()))
@@ -147,55 +121,47 @@ if theo:
     y_bars_u1 =  array('f', [ebar_u1[i] * list(y_th_xsec.values())[i] for i in range(n_limits)])
     y_bars_u2 =  array('f', [ebar_u2[i] * list(y_th_xsec.values())[i] for i in range(n_limits)])
 
-#print "Error bars d1: ", ebar_d1
-#print "Error bars xsec d1: ", y_bars_d1
-
-#print "Error bars d2: ", ebar_d2
-#print "Error bars xsec d2: ", y_bars_d2
-
-#print "Error bars u1: ", ebar_u1
-#print "Error bars xsec u1: ", y_bars_u1
-
-#print "Error bars u2: ", ebar_u2
-#print "Error bars xsec u2: ", y_bars_u2
-
 
 x_bars_1 = array('f', [0] * n_limits)
 x_bars_2 = array('f', [0] * n_limits)
 
-# need to pick up 
-#y_theo = [ s.sigma for s in samples]
 
-median = ROOT.TGraph(n_limits, xvalues, med_values)
-if theo: median = ROOT.TGraph(n_limits, xvalues, y_xsec_vals)
+median = ROOT.TGraph(n_limits, x_values, expected_values)
+if theo:
+    median = ROOT.TGraph(n_limits, x_values, y_xsec_vals)
+    
 median.SetLineWidth(2)
 median.SetLineStyle(2)
 median.SetLineColor(ROOT.kBlue)
 median.SetFillColor(0)
 median.GetXaxis().SetRangeUser(110, 150)
 
-obs = ROOT.TGraph(n_limits, xvalues, obs_values)
-if theo: obs = ROOT.TGraph(n_limits, xvalues, y_xsec_obs_vals)
+obs = ROOT.TGraph(n_limits, x_values, observed_values)
+if theo: obs = ROOT.TGraph(n_limits, x_values, y_xsec_obs_vals)
 obs.SetLineWidth(2)
 obs.SetLineStyle(1)
 obs.SetLineColor(ROOT.kBlue)
 obs.SetFillColor(0)
 obs.GetXaxis().SetRangeUser(110, 150)
 
-theory = ROOT.TGraph(n_limits, xvalues, y_th_xsec_vals)
+theory = ROOT.TGraph(n_limits, x_values, y_th_xsec_vals)
 theory.SetLineWidth(2)
 theory.SetLineStyle(1)
 theory.SetLineColor(ROOT.kRed)
 theory.SetFillColor(ROOT.kWhite)
 
-band_1sigma = ROOT.TGraphAsymmErrors(n_limits, xvalues, med_values, x_bars_1, x_bars_2, y_bars_d1, y_bars_u1)
-if theo: band_1sigma = ROOT.TGraphAsymmErrors(n_limits, xvalues, y_xsec_vals, x_bars_1, x_bars_2, y_bars_d1, y_bars_u1)
+band_1sigma = ROOT.TGraphAsymmErrors(n_limits, x_values, expected_values, x_bars_1, x_bars_2, y_bars_d1, y_bars_u1)
+if theo:
+    band_1sigma = ROOT.TGraphAsymmErrors(n_limits, x_values, y_xsec_vals, x_bars_1, x_bars_2, y_bars_d1, y_bars_u1)
 band_1sigma.SetFillColor(ROOT.kGreen + 1)
 band_1sigma.SetLineColor(ROOT.kGreen + 1)
 band_1sigma.SetMarkerColor(ROOT.kGreen + 1)
 
-band_2sigma = ROOT.TGraphAsymmErrors(n_limits, xvalues, med_values, x_bars_1, x_bars_2, y_bars_d2, y_bars_u2)
-if theo: band_2sigma = ROOT.TGraphAsymmErrors(n_limits, xvalues, y_xsec_vals, x_bars_1, x_bars_2, y_bars_d2, y_bars_u2)
+band_2sigma = ROOT.TGraphAsymmErrors(n_limits, x_values, expected_values, x_bars_1, x_bars_2, y_bars_d2, y_bars_u2)
+
+if theo:
+    band_2sigma = ROOT.TGraphAsymmErrors(n_limits, x_values, y_xsec_vals, x_bars_1, x_bars_2, y_bars_d2, y_bars_u2)
+
 band_2sigma.SetTitle("")
 band_2sigma.SetFillColor(ROOT.kOrange)
 band_2sigma.SetLineColor(ROOT.kOrange)
@@ -217,10 +183,11 @@ legend.SetTextSize(0.039)
 legend.SetFillStyle(0)
 legend.SetBorderSize(0)
 legend.SetHeader("95% CL upper limits")
-# uncomment for ob as well
-# legend.AddEntry(m_y_lineObs_graph,"Observed","ex0p")
-# legend.AddEntry(m_y_lineSI_graph,"CL_{S} sign. injected")
-if(unblind): legend.AddEntry(obs,"Median observed");
+
+
+if unblind:
+    legend.AddEntry(obs,"Median observed")
+
 legend.AddEntry(median,"Median expected")
 legend.AddEntry(band_1sigma,"68% expected")
 legend.AddEntry(band_2sigma,"95% expected")
@@ -240,61 +207,55 @@ band_2sigma.Draw("A3")
 band_1sigma.Draw("3")
 band_1sigma.SetMaximum(200)
 median.Draw("L")
-if(unblind):obs.Draw("L")
+
+if unblind:
+    obs.Draw("L")
+
 theory.Draw("L same")
 legend.Draw("Same")
 
-lumiTextSize     = 0.6
-lumiTextOffset   = 0.2
-# float cmsTextSize      = 0.75;
-# float cmsTextOffset    = 0.1;  // only used in outOfFrame version
 
-pad = ROOT.TPad("pad","pad",0, 0. , 1, 1.)
-ROOT.SetOwnership(pad, False)
-pad.SetBorderMode(0)
+def draw_labels():
 
-pad.SetTickx(0)
-pad.SetTicky(0)
-# pad.Draw();
-#pad.cd();
-t = pad.GetTopMargin()
-r = pad.GetRightMargin()
-cmsText = ROOT.TString("CMS")
-cmsTextFont = 61
-cmsTextSize = 0.75
+    lumi_per_year = {
+        "2016": "35.92 fb^{-1} (13 TeV)",
+        "2017": "41.53 fb^{-1} (13 TeV)",
+        "2018": "59.8 fb^{-1} (13 TeV)",
+        "Run2": "137.19 fb^{-1} (13 TeV)",
+    }
 
-lumiText = "77.45 fb^{-1} (13 TeV)"
-if (opt.year == "2016"):lumiText = "35.92 fb^{-1} (13 TeV)"
-elif (opt.year == "2017"):lumiText = "41.53 fb^{-1} (13 TeV)"
-elif (opt.year == "2018"):lumiText = "59.8 fb^{-1} (13 TeV)"
-elif (opt.year == "Run2"):lumiText = "137.19 fb^{-1} (13 TeV)"
-latex_lumi = ROOT.TLatex()
-latex_lumi.SetNDC()
-latex_lumi.SetTextAngle(0)
-latex_lumi.SetTextColor(ROOT.kBlack)
+    label_lumi = ROOT.TLatex()
+    label_cms = ROOT.TLatex()
+    label_preliminary = ROOT.TLatex()
+    
+    label_lumi.SetNDC()
+    label_cms.SetNDC()
+    label_preliminary.SetNDC()
+    
+    label_lumi.SetTextFont(42)
+    label_preliminary.SetTextFont(52)
+    
+    label_lumi.SetTextAlign(31)         # align right
+    label_cms.SetTextAlign(11)          # align left
+    label_preliminary.SetTextAlign(11)  # align left
 
-latex_lumi.SetTextFont(42)
-latex_lumi.SetTextAlign(31)
-latex_lumi.SetTextSize(lumiTextSize*t*0.55)
-latex_lumi.DrawLatex(1-r,1-t+lumiTextOffset*t,lumiText)
+    top_margin = ROOT.gPad.GetTopMargin()
+    right_margin = ROOT.gPad.GetRightMargin()
+    
+    label_lumi.SetTextSize(0.33 * top_margin)
+    label_cms.SetTextSize(0.48 * top_margin)
+    label_preliminary.SetTextSize(0.39 * top_margin)
 
-label_cms = ROOT.TLatex()
-label_cms.SetNDC()
-label_cms.SetTextSize(lumiTextSize*t*0.8)
-label_cms.SetTextAlign(11) # align left
-label_cms.DrawLatex(0.15,0.83,"CMS")
+    label_text_offset = 0.2
+    
+    label_lumi.DrawLatex(1-right_margin, 1-top_margin+label_text_offset*top_margin, lumi_per_year[opt.year])
+    label_cms.DrawLatex(0.15, 0.83,"CMS")
+    label_preliminary.DrawLatex(0.17, 1-top_margin+label_text_offset*top_margin,"Work in progress")
 
-label_preliminary = ROOT.TLatex()
-label_preliminary.SetNDC()
-label_preliminary.SetTextAlign(31) # align right
-label_preliminary.SetTextSize(lumiTextSize*t*0.65)
-label_preliminary.SetTextFont(52)
-label_preliminary.SetTextAlign(11) # align left
-label_preliminary.DrawLatex(0.17,1-t+lumiTextOffset*t,"Work in progress")
-label_preliminary.DrawLatex(0.13, 0.81,"")
+
+draw_labels()
+
 
 c1.Update()
-
 c1.SaveAs("plots/test_limitPlot_%s_%s.pdf" % (opt.year, cat))
-
 ROOT.gApplication.Run()
